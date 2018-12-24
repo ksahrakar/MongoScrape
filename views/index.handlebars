@@ -1,0 +1,46 @@
+
+{{#each articles}}
+    <div class="row">
+        <div class="col s4 push-s2">
+            <div class="card blue-grey">
+                <div class="card-content white-text">
+                    <img width="70" height="70" src="{{picURL}}"">
+                    <span>{{title}}</span>
+                </div>
+                <div class="card-action">
+                    <a href="{{link}}" target="_blank">READ ARTICLE</a>
+                    <a href="">SAVE</a>
+                </div>
+            </div>
+        </div>
+        <div class="col s5 push-s2">
+            <div class="card teal">
+                <div class="card-content white-text">
+                    <span class="card-title">COMMENTS</span>
+                </div>
+                <div class="card-action">
+                    <a href="#cmntModal" class="modal-trigger">COMMENT</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{{/each}}
+
+<div class="modal fade" id="cmntModal" role="dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="Comments">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Modal Header</h4>
+        </div>
+        <div class="modal-body">
+          <p>Comments listed here...</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Submit</button>  
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+</div>
