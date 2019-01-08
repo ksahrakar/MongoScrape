@@ -1,0 +1,66 @@
+<nav>
+    <div class="nav-wrapper blue-grey lighten-2">
+    <a href="" class="brand-logo">Your Saved GloReas Articles</a>
+    <ul id="nav-mobile" class="right">
+        <li><a href="">Home</a></li>
+        <li><a href="">Logout</a></li>
+    </ul>
+    </div>
+</nav>
+
+<div class="container">
+{{#each sArticles}}
+    <div class="row">
+        <div class="col s2">
+            <div class="card blue-grey">
+                <div class="card-content white-text" style="display:flex">
+                    <img width="70" height="70" src="{{picURL}}">
+                    <span style="padding-left:5px">{{title}}</span>
+                </div>
+                <p style="font-size: 10px">&nbsp;{{artDate}} ID:{{artID}}</p>
+                <div class="card-action">
+                    <a href="{{link}}" target="_blank">READ ARTICLE</a>
+                    <a href="">DELETE SAVED</a>
+                </div>
+            </div>
+        </div>
+        <div class="col s4">
+            <div class="card teal">
+                <div class="card-content white-text">
+                    <span class="card-title">COMMENTS <span style="font-size: 10px">&nbsp;ID:{{artID}}</span></span>
+                </div>
+                <div class="card-action">
+                    <a class="modal-trigger" href="#addModal" >ADD COMMENT</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{{/each}}
+</div>
+
+
+<div class="modal" id="addModal">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <a type="button" class="modal-close">&times;</a>
+        <div class="comments">
+            <h4 class="modal-title">Comments</h4>
+        </div>
+        <div class="modal-body">
+            <ul>
+              {{#each comments}}
+              <li>Comments listed here...</li>
+              {{/each}}
+            </ul>
+            <form method="post" action="/api/comment/{{artID}}/{{userID}}">
+                <div class="input-field">
+                    <label for="commentarea">Comment here...</label>
+                    <textarea type="text" name="body" id="commentarea" class="materialize-input"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" class="modal-close btn btn-default" value="Submit">  
+                </div>
+            </form>
+        </div>
+      </div>
+</div>
