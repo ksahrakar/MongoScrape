@@ -1,6 +1,6 @@
 <nav>
     <div class="nav-wrapper blue-grey lighten-2">
-    <a href="" class="brand-logo">GloReas' Scrapings</a>
+    <a href="" class="brand-logo">GloReas' Top Headline Scrapings</a>
     <ul id="nav-mobile" class="right">
         <li><a href="./saved">Saved</a></li>
         <li><a href="/rescrape">Rescrape</a></li>
@@ -61,7 +61,7 @@
                 <p>{{body}}</p>
                 {{/each}}
             </ul>
-            <form method="post" action="/comment/add/{{articles.artID}}">
+            <form method="post" action="/comment/add/{{artID}}">
                 <div class="input-field">
                     <label for="commentarea">Comment here...</label>
                     <input style="background-color:rgb(183, 223, 217); height:100px" type="text" name="body" id="commentarea" class="materialize-input"></input>
@@ -76,11 +76,16 @@
 
 <div class="modal" id="loginModal">
 
+    <button style="float:right" type="button" class="modal-close">&times;</button>
+    <div class="comments">
+        <h4 class="modal-title" style="margin-left:10px">Sign In</h4>
+    </div>
     <form action="/login" method="post">
-        <input type="text" name="username" placeholder="username">
-        <input type="password" name="password" placeholder="password">
-        <input type="text" name ="email" placeholder="email">
-        <input type="submit" class="modal-close btn btn-default" value="Submit">
+        <label style="margin:20px 20px 0 20px" for="email">E-mail</label>
+        <input style="margin:0 20px 0 20px" type="text" name ="email" placeholder="email">
+        <label style="margin:20px 20px 0 20px" for="password">Password</label>
+        <input style="margin:0 20px 0 20px" type="password" name="password" placeholder="password">
+        <input style="margin:20px 20px;float:right" type="submit" class="modal-close btn btn-default" value="Submit">
     </form>
 
 </div>

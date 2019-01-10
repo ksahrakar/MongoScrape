@@ -22,10 +22,9 @@ var ArticleSchema = new Schema({
         type:Date,
     },
     comments:[{
-        body:String,
-        madeBy: Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: "User",
-        madeOn: Date.now()
+        content:String
     }]
 });
 

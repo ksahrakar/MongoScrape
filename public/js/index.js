@@ -3,5 +3,6 @@ $(document).ready(function(){
 });
 
 $(document).ready(function(){
-    $("#signinModal").modal();
+    $("#loginModal").modal();
 })
+
