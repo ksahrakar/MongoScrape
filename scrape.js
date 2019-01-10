@@ -96,9 +96,9 @@ app.get("/",function(req,res){
 
 app.post("/comment/add/:artID",function(req,res){
   var artcl=req.params.artID;
-  //console.log(req);
+  console.log(artcl," ",req.body.body);
   console.log("loading comment for article ");
-  db.Article.update([{"artID":artcl},{$push:{"content":req.body.body}} //,{"aArt":req.params.artID}
+  db.Article.update([{"artID":artcl},{$push:{"comments.content":req.body.body}} //,{"aArt":req.params.artID}
     ], function(err,resp){
     if(err) console.log(err)
     else{console.log("success", resp)}
@@ -106,8 +106,18 @@ app.post("/comment/add/:artID",function(req,res){
   res.render("index");
 })
 
-app.post("/login", redirectHome, function(req,res){
+app.post("/register", redirectHome, function(req,res){
   db.User.create(req.body)
+    .then(function(dbUser){
+      res.json(dbUser);
+    })
+    .catch(function(err){
+      res.json(err)
+    })
+})
+
+app.post("/login", redirectHome, function(req,res){
+  db.User.findOne(req.body)
     .then(function(dbUser){
       res.json(dbUser);
     })

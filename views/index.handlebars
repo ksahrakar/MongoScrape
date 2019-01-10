@@ -5,6 +5,7 @@
         <li><a href="./saved">Saved</a></li>
         <li><a href="/rescrape">Rescrape</a></li>
         <li><a class="modal-trigger" href="#loginModal">Login</a></li>
+        <li><a class="modal-trigger" href="#registerModal">Register</a></li>
     </ul>
     </div>
 </nav>
@@ -32,13 +33,14 @@
                     <span class="card-title">COMMENTS <span style="font-size: 10px">&nbsp;ID:{{artID}}</span></span>
                 </div>
                 <div>
-                    {{#each articles.comment}}
-                    <p style="font-size: 12px">{{comment}}</p>
-                    <p style="font-size:10px"><span>{{madeBy.username}}</span><span>{{dateCreated}}</span></p>
+                    {{#each comments}}
+                    <p style="font-size: 12px">{{comments.content}}</p>
+                    <p style="font-size:10px"><span>{{comments.username}}</span><span>{{comments.date}}</span></p>
+                    <button id={{artID}}>Remove</button>
                     {{/each}}
                 </div>
                 <div class="card-action">
-                    <a class="modal-trigger" href="#cmntModal" >VIEW ALL</a>
+                    <a class="modal-trigger" href="#cmntModal" >COMMENT</a>
                 </div>
             </div>
         </div>
@@ -52,19 +54,14 @@
       
         <button style="float:right" type="button" class="modal-close">&times;</button>
         <div class="comments">
-            <h4 class="modal-title" style="margin-left:10px">Comments</h4>
+            <h4 class="modal-title" style="margin-left:10px">Add Comment</h4>
         </div>
         <div class="modal-body">
-            <ul>
-                <p>Comments will be listed here...</p>
-                {{#each comments}}
-                <p>{{body}}</p>
-                {{/each}}
-            </ul>
-            <form method="post" action="/comment/add/{{artID}}">
+            
+            <form method="post" action="/comment/add/5665133">
                 <div class="input-field">
                     <label for="commentarea">Comment here...</label>
-                    <input style="background-color:rgb(183, 223, 217); height:100px" type="text" name="body" id="commentarea" class="materialize-input"></input>
+                    <input style="background-color:rgb(183, 223, 217); height:150px" type="text" name="body" id="commentarea" class="materialize-input"></input>
                 </div>
                 <div class="modal-footer">
                     <input style="margin-right:20px" type="submit" class="modal-close btn btn-default" value="Submit">  
@@ -85,7 +82,25 @@
         <input style="margin:0 20px 0 20px" type="text" name ="email" placeholder="email">
         <label style="margin:20px 20px 0 20px" for="password">Password</label>
         <input style="margin:0 20px 0 20px" type="password" name="password" placeholder="password">
-        <input style="margin:20px 20px;float:right" type="submit" class="modal-close btn btn-default" value="Submit">
+        <input style="margin:20px 20px;float:right" type="submit" class="modal-close btn btn-default" value="Login">
+    </form>
+
+</div>
+
+<div class="modal" id="registerModal">
+
+    <button style="float:right" type="button" class="modal-close">&times;</button>
+    <div class="comments">
+        <h4 class="modal-title" style="margin-left:10px">Sign In</h4>
+    </div>
+    <form action="/register" method="post">
+        <label style="margin:20px 20px 0 20px" for="username">Username</label>
+        <input style="margin:0 20px 0 20px" type="text" name="username" placeholder="Username">
+        <label style="margin:20px 20px 0 20px" for="email">E-mail</label>
+        <input style="margin:0 20px 0 20px" type="text" name ="email" placeholder="email">
+        <label style="margin:20px 20px 0 20px" for="password">Password</label>
+        <input style="margin:0 20px 0 20px" type="password" name="password" placeholder="password">
+        <input style="margin:20px 20px;float:right" type="submit" class="modal-close btn btn-default" value="Register">
     </form>
 
 </div>

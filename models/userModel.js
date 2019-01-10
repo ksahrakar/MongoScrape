@@ -13,7 +13,8 @@ var UserSchema = new Schema({
     },
     email:{
         type:String,
-        unique:true
+        unique:true,
+        required:"email is required"
     },
     articles:[{
         type: Schema.Types.ObjectId,
