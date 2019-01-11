@@ -10,22 +10,24 @@ var ArticleSchema = new Schema({
     artTitle:{
         type:String,
         trim:true,
+        unique:true
     },
     artUrl:{
         type:String,
+        unique:true,
         unique:true
     },
     picUrl:{
         type:String,
+        unique:true
     },
     artDate:{
         type:Date,
     },
     comments:[{
         type: Schema.Types.ObjectId,
-        ref: "User",
-        content:String,
-        date: Date.now
+        ref: "Comment",
+        artID:this.artID
     }]
 });
 

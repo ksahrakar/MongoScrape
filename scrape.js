@@ -77,13 +77,13 @@ app.get("/rescrape",function(req,res){
       var date=$(element).children(".date").text();
       var artID=link.substr(link.length-7);
       var newArt = {"artID":artID,"artTitle":title,"artUrl": link,"picUrl":url,"artDate":date};
-      console.log(newArt);
+      //console.log(newArt);
       // Save the first 25 results in an object if they are new only
       if (i<25){
         db.Article.create({"artID":artID,"artTitle":title,"artUrl": link,"picUrl":url,"artDate":date});
       };
-    }).then (console.log("rescraped"))
-  });
+    });
+  }); res.redirect("/");
 });
 
 // Log the results once you've looped through each of the elements
@@ -135,7 +135,8 @@ app.get("/save/:artID", function(req,res){
     if(err){console.log(err)}
     else{db.User.articles.insert(resp)}
   });
-  res.status(200).send({message:"Article saved"});
+  console.log("article saved");
+  res.redirect("/");
 });
 
 app.post("/logout",redirectLogin, function(req,res){
@@ -144,6 +145,4 @@ app.post("/logout",redirectLogin, function(req,res){
     res.clearCookie();
     res.redirect("/");
   })
-})
-
-
+});

@@ -2,7 +2,7 @@
     <div class="nav-wrapper blue-grey lighten-2">
     <a href="" class="brand-logo">GloReas' Top Headline Scrapings</a>
     <ul id="nav-mobile" class="right">
-        <li><a href="./saved">Saved</a></li>
+        <li><a href="/saved">Saved</a></li>
         <li><a href="/rescrape">Rescrape</a></li>
         <li><a class="modal-trigger" href="#loginModal">Login</a></li>
         <li><a class="modal-trigger" href="#registerModal">Register</a></li>
@@ -34,13 +34,13 @@
                 </div>
                 <div>
                     {{#each comments}}
-                    <p style="font-size: 12px">{{comments.content}}</p>
-                    <p style="font-size:10px"><span>{{comments.username}}</span><span>{{comments.date}}</span></p>
+                    <p style="font-size: 12px">{{body}}</p>
+                    <p style="font-size:10px"><span>{{username}}</span><span>{{date}}</span></p>
                     <button id={{artID}}>Remove</button>
                     {{/each}}
                 </div>
                 <div class="card-action">
-                    <a class="modal-trigger" href="#cmntModal" >COMMENT</a>
+                    <a href="/comment" >COMMENT</a>
                 </div>
             </div>
         </div>
@@ -49,7 +49,7 @@
 </div>
 
 
-<div class="modal modal-fixed-footer" id="cmntModal">
+{{!-- <div class="modal modal-fixed-footer" id="cmntModal">
       <!-- Modal content-->
       
         <button style="float:right" type="button" class="modal-close">&times;</button>
@@ -69,7 +69,7 @@
             </form>
         </div>
       
-</div>
+</div> --}}
 
 <div class="modal" id="loginModal">
 
