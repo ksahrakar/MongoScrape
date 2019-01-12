@@ -26,10 +26,10 @@ var ArticleSchema = new Schema({
     },
     comments:[{
         type: Schema.Types.ObjectId,
-        ref: "Comment",
-        artID:this.artID
+        ref: "Comment"
     }]
 });
+
 
 var Article = mongoose.model("Article", ArticleSchema);
 

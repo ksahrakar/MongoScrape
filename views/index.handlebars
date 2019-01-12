@@ -35,12 +35,16 @@
                 <div>
                     {{#each comments}}
                     <p style="font-size: 12px">{{body}}</p>
-                    <p style="font-size:10px"><span>{{username}}</span><span>{{date}}</span></p>
-                    <button id={{artID}}>Remove</button>
+                    {{!-- <p style="font-size:10px"><span>{{username}}</span><span>{{date}}</span></p> --}}
+                    <form action="/remove/{{_id}}" method="post">
+                        <input type="submit" value="Remove">
+                    </form>
                     {{/each}}
                 </div>
                 <div class="card-action">
-                    <a href="/comment" >COMMENT</a>
+                    <form action="/comment/{{artID}}" method="post">
+                    <input type="submit" class="btn btn-default" value="Comment">
+                    </form>
                 </div>
             </div>
         </div>

@@ -96,14 +96,13 @@ app.get("/",function(req,res){
 
 app.post("/comment/add/:artID",function(req,res){
   var artcl=req.params.artID;
-  console.log(artcl," ",req.body.body);
-  console.log("loading comment for article ");
-  db.Article.update([{"artID":artcl},{$push:{"comments.content":req.body.body}} //,{"aArt":req.params.artID}
-    ], function(err,resp){
-    if(err) console.log(err)
-    else{console.log("success", resp)}
-  })
-  res.render("index");
+  db.Comment
+    .create({"artID":artcl,"body":req.body.body})
+    .then(function(dbComment)
+      {return db.Article.findOneAndUpdate({},{$push:{comments:dbComment._id}},{new:true});
+  });
+  res.reload("/");
+  res.redirect("/");
 })
 
 app.post("/register", redirectHome, function(req,res){
@@ -146,3 +145,13 @@ app.post("/logout",redirectLogin, function(req,res){
     res.redirect("/");
   })
 });
+
+app.post("/comment/:artID", function(req,res){
+  artclID=req.params.artID;
+  res.render("comment",{"artID":artclID});
+})
+
+app.post("/remove/:cmntID", function(req,res){
+  console.log(req.params.cmntID);
+  res.redirect("/");
+})

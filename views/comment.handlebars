@@ -10,20 +10,18 @@
 <div id="cmnt">
       
         <div class="comments">
-            <h4 style="margin-left:10px">Add Comment</h4>
+            <h4 style="margin-left:10px">Add Comment To Article {{artID}}</h4>
         </div>
         <div >
             <form method="post" action="/comment/add/{{artID}}">
-                <div class="input-field">
+                <div style="margin-left:20px" class="input-field">
                     <label for="commentarea">Comment here...</label>
-                    <input style="background-color:rgb(183, 223, 217); height:150px" type="text" name="body" id="commentarea" class="materialize-input"></input>
+                    <input style="background-color:rgb(183, 223, 217); height:150px; width:400px" type="text" name="body" id="commentarea" class="materialize-input"></input>
                 </div>
                 <div>
-                    <input style="margin-right:20px" type="submit" class="btn btn-default" value="Submit">  
+                    <input style="margin-left:300px" type="submit" class="btn btn-default" value="Submit">  
                 </div>
             </form>
         </div>
       
 </div>
-
-<h1>Comment Page</h1>
