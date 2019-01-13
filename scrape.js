@@ -3,7 +3,6 @@ var axios = require("axios");
 var handlebars = require("express-handlebars");
 var express = require("express");
 var app = express();
-var moment = require("moment");
 
 //Add User model and connect
 var mongoose=require("mongoose");
@@ -15,13 +14,6 @@ var mongoose=require("mongoose");
 var db = require("./models");
 mongoose.connect("mongodb://localhost/scraper",{useNewUrlParser:true});
 
-//Dummy data for users
-// var dummy={
-//   username:"ks",
-//   password:"1234",
-//   email:"k@gmail.com"
-// };
-// db.User.create(dummy);
 
 //Session authentication
 const session = require("express-session");
@@ -40,16 +32,6 @@ const redirectHome = (req,res,next)=>{
     res.redirect("/")
   } else {next()}
 }
-
-//Add Mongo
-// var mongojs=require("mongojs");
-// var databaseUrl = "scraper";
-// var collections = ["users","articles","articles2","comments"];
-// var db=mongojs(databaseUrl,collections);
-
-// db.on("error",function(error){
-//   console.log("Mongo Error: ",error);
-// })
 
 
 app.use(express.urlencoded({extended: false}));
@@ -88,10 +70,14 @@ app.get("/rescrape",function(req,res){
 
 // Log the results once you've looped through each of the elements
 app.get("/",function(req,res){
-  db.Article.find({},function(err,found){
-    if(err){console.log(err)}
-    else{res.render("index",{articles:found})}
-  });
+  db.Article
+    .find({})
+    .populate("comments")
+    .then (function(found){
+        res.render("index",{articles:found})})
+    .catch(function(err){
+      res.json(err);
+    });
 });
 
 app.post("/comment/add/:artID",function(req,res){
@@ -99,14 +85,15 @@ app.post("/comment/add/:artID",function(req,res){
   db.Comment
     .create({"artID":artcl,"body":req.body.body})
     .then(function(dbComment)
-      {return db.Article.findOneAndUpdate({},{$push:{comments:dbComment._id}},{new:true});
+      {return db.Article
+        .findOneAndUpdate({artID:artcl},{$push:{comments:dbComment._id},new:true});
   });
-  res.reload("/");
   res.redirect("/");
 })
 
 app.post("/register", redirectHome, function(req,res){
-  db.User.create(req.body)
+  db.User
+    .create(req.body)
     .then(function(dbUser){
       res.json(dbUser);
     })
@@ -116,7 +103,8 @@ app.post("/register", redirectHome, function(req,res){
 })
 
 app.post("/login", redirectHome, function(req,res){
-  db.User.findOne(req.body)
+  db.User
+    .findOne(req.body)
     .then(function(dbUser){
       res.json(dbUser);
     })
@@ -130,7 +118,8 @@ app.get("/saved", redirectLogin, function(req,res){
 })
 
 app.get("/save/:artID", function(req,res){
-  db.Article.findOne({"artID":req.params.artID},function(err,resp){
+  db.Article
+    .findOne({"artID":req.params.artID},function(err,resp){
     if(err){console.log(err)}
     else{db.User.articles.insert(resp)}
   });
@@ -139,8 +128,8 @@ app.get("/save/:artID", function(req,res){
 });
 
 app.post("/logout",redirectLogin, function(req,res){
-  req.session.destroy(err=>{
-    if (err){return res.redirect("/")}
+  req.session
+    .destroy(err=>{if (err){return res.redirect("/")};
     res.clearCookie();
     res.redirect("/");
   })
@@ -149,9 +138,11 @@ app.post("/logout",redirectLogin, function(req,res){
 app.post("/comment/:artID", function(req,res){
   artclID=req.params.artID;
   res.render("comment",{"artID":artclID});
-})
+});
 
 app.post("/remove/:cmntID", function(req,res){
-  console.log(req.params.cmntID);
+  cmntID=req.params.cmntID;
+  db.Article.findOneAndUpdate({},{$pull:{comments:cmntID}},{new:true});
+  db.Comment.deleteOne({_id:cmntID},function(err){if (err) return err});
   res.redirect("/");
-})
+});
