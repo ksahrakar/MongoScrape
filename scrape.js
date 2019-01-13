@@ -4,6 +4,10 @@ var handlebars = require("express-handlebars");
 var express = require("express");
 var app = express();
 
+//Environment/Heroku
+const CONNECTION_URI=process.env.MONGODB_URI || "mongodb://localhost/scraper";
+const PORT = process.env.PORT || 3000;
+
 //Add User model and connect
 var mongoose=require("mongoose");
 // var User=require("./models/userModel");
@@ -12,8 +16,7 @@ var mongoose=require("mongoose");
 
 //Add all models/collections and connect to database
 var db = require("./models");
-mongoose.connect("mongodb://localhost/scraper",{useNewUrlParser:true});
-
+mongoose.connect(CONNECTION_URI,{useNewUrlParser:true});
 
 //Session authentication
 const session = require("express-session");
@@ -41,7 +44,7 @@ app.use(express.static("public"));
 app.engine("handlebars",handlebars({defaultLayout:"main"}));
 app.set("view engine", "handlebars");
 
-app.listen(3000);
+app.listen(PORT);
 
 // Making a scrape request via axios
 app.get("/rescrape",function(req,res){
